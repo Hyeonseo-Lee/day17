@@ -1,82 +1,52 @@
+import random
 
-def isQueueFull() :
-    global SIZE, queue, front, rear
-    if (rear == SIZE-1) :
-        return True
-    else :
-        return False
+class TreeNode() :
+    def __init__ (self) :
+        self.left = None
+        self.data = None
+        self.right = None
 
-def isQueueEmpty() :
-    global SIZE, queue, front, rear
-    if (front == rear) :
-        return True
-    else :
-        return False
 
-def enQueue(data) :
-    global SIZE, queue, front, rear
-    if (isQueueFull()) :
-        print("큐가 꽉 찼습니다.")
-        return
-    rear += 1
-    queue[rear] = data
+memory = []
+Root = None
+overlaparr = ['레쓰비캔커피', '레쓰비캔커피', '레쓰비캔커피', '도시락', '도시락',
+              '삼각김밥', '레쓰비캔커피', '도시락', '코카콜라', '삼다수', '레쓰비캔커피',
+              '레쓰비캔커피', '레쓰비캔커피', '츄파츕스', '츄파츕스', '레쓰비캔커피',
+              '코카콜라', '츄파츕스', '삼각김밥', '코카콜라']
 
-def deQueue() :
-    global SIZE, queue, front, rear
-    if (isQueueEmpty()) :
-        print("큐가 비었습니다.")
-        return None
-    front += 1
-    data = queue[front]
-    queue[front] = None
-    return data
 
-def peek() :
-    global SIZE, queue, front, rear
-    if (isQueueEmpty()) :
-        print("큐가 비었습니다.")
-        return None
-    return queue[front+1]
+node = TreeNode()
+node.data = overlaparr[0]
+Root = node
+memory.append(node.data)
 
-def call(str):
-    global SIZE, queue, front, rear, time
-    if str == "사용":
-        enQueue("('사용', 9)")
-        time += 9
-    elif str == "고장":
-        enQueue("('고장', 3)")
-        time += 3
-    elif str == "환불":
-        enQueue("('환불', 4)")
-        time += 4
-    else:
-        time += 0
+for stuff in overlaparr[1:] :
 
-def printqueue():
-    global SIZE, queue, front, rear, time
-    if not isQueueFull():
-        print(f'귀하의 대기 예상시간은 {time}분입니다.')
-        print('현재 대기 콜 -->', queue)
-    else:
-        print('최종 대기 콜 -->', queue)
+    node = TreeNode()
+    node.data = stuff
+    current = Root
+    while True :
+        if stuff < current.data :
+            if current.left == None :
+                current.left = node
+                memory.append(node.data)
+                break
+            current = current.left
+        elif stuff > current.data :
+            if current.right == None :
+                current.right = node
+                memory.append(node.data)
+                break
+            current = current.right
+        else:
+            break
 
-SIZE = 6
-queue = [ None for _ in range(SIZE) ]
-front = rear = 0
-time = 0
-## 메인 코드 부분 ##
-if __name__ == "__main__" :
+    #memory.append(node.data)
 
-    printqueue()
-    call("사용")
-    printqueue()
-    call("고장")
-    printqueue()
-    call("환불")
-    printqueue()
-    call("환불")
-    printqueue()
-    call("고장")
-    printqueue()
+print("오늘 판매된 물건(중복O) --> ", overlaparr)
+print("이진 탐색 트리 구성 완료!")
+print("오늘 판매된 종류(중복X)-->", memory)
 
-    print("프로그램 종료!")
+
+
+
