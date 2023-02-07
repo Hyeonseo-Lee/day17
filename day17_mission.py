@@ -62,7 +62,7 @@ if __name__ == "__main__" :
         #
             print("대기줄 상태 : ", queue)
             for s in range(5):
-                #data = deQueue()
+
                 a= queue[0]
                 print(f'{a}님 식당에 들어감')
                 for i in range(1, 5):
